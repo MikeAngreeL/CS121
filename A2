@@ -178,6 +178,7 @@ int main()
             {
                 celestialMenu();
                 cin >> userResponse;
+                userResponse[0] = toupper(userResponse[0]); // captializes the user Response if they used all lower case
             }
         }
     } // end of while loop for continued execution

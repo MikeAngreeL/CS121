@@ -11,18 +11,20 @@ using namespace std;
 
 void celestialMenu() //provides a menu for the user to use as a selection tool
 {
-    cout << "Celestial Body" << '\t' << '\t' << "Weight Factor" << endl;
-    cout << "Mercury" << '\t' << '\t' << '\t'<< "0.42" << endl;
-    cout << "Venus" << '\t' << '\t' << '\t'<< "0.89" << endl;
-    cout << "Earth" << '\t' << '\t' << '\t'<< "1.0" << endl;
-    cout << "Moon" << '\t' << '\t' << '\t'<< "0.16" << endl;
-    cout << "Mars" << '\t' << '\t' << '\t'<< "0.35" << endl;
-    cout << "Jupiter" << '\t' << '\t' << '\t'<< "2.53" << endl;
-    cout << "Saturn" << '\t' << '\t' << '\t'<< "1.06" << endl;
-    cout << "Uranus" << '\t' << '\t' << '\t'<< "0.89" << endl;
-    cout << "Neptune" << '\t' << '\t' << '\t'<< "1.17" << endl;
-    cout << "Pluto" << '\t' << '\t' << '\t'<< "0.08" << endl;
-    cout << endl;
+    cout << "**************************************************" << endl;
+    cout << "* \t[Celestial Body]" << '\t' << "[Weight Factor]\t *" << endl;
+    cout << "* \tMercury" << '\t' << '\t' << '\t'<< "0.42\t\t *" << endl;
+    cout << "* \tVenus" << '\t' << '\t' << '\t'<< "0.89\t\t *" << endl;
+    cout << "* \tEarth" << '\t' << '\t' << '\t'<< "1.0\t\t *" << endl;
+    cout << "* \tMoon" << '\t' << '\t' << '\t'<< "0.16\t\t *" << endl;
+    cout << "* \tMars" << '\t' << '\t' << '\t'<< "0.35\t\t *" << endl;
+    cout << "* \tJupiter" << '\t' << '\t' << '\t'<< "2.53\t\t *" << endl;
+    cout << "* \tSaturn" << '\t' << '\t' << '\t'<< "1.06\t\t *" << endl;
+    cout << "* \tUranus" << '\t' << '\t' << '\t'<< "0.89\t\t *" << endl;
+    cout << "* \tNeptune" << '\t' << '\t' << '\t'<< "1.17\t\t *" << endl;
+    cout << "* \tPluto" << '\t' << '\t' << '\t'<< "0.08\t\t *" << endl;
+    cout << "**************************************************" << endl;
+    //cout << endl;
 } // end of menu function
 
 int celestialSelection(string userResponse) //this function is giving a numeric value to a planet that the use picked for the switch function
@@ -125,43 +127,20 @@ float celestialConversion(int celestialSelection, float userWeight) // takes the
     return totalWeight; // spits out the converstion 
 }// end of conversion function
 
-
-int main()
+void doesWork()
 {
     string userResponse;
-    float userWeight;
+    float userWeight = 0.0;
     float conversionWeight;
-    string userContinue = "Yes";
+    string userContinue = "Y";
+    
     cout << fixed;
     cout << setprecision(2);
-
-    cout << "Welcome to a Solar System weight calculator" << endl;
-    cout << "Please provide a weight that you would like to test:" << endl;
-    cin >> userWeight;
-    cout << endl;
-    cout << "Now please pick a celestial body from this list:" << endl;
-    celestialMenu();    //prints a menu for the user to pick from 
-    cout << endl;
-    cin >> userResponse;
-    cout << endl;
-    userResponse[0] = toupper(userResponse[0]); // captializes the user Response if they used all lower case
-
-    while(celestialSelection(userResponse) == 10) //a while loop for invalid entries
-    {
-        celestialMenu();
-        cin >> userResponse;
-    }
 
     //conversionWeight = celestialConversion(celestialSelection(userResponse), userWeight); tested functions {worked}
     //cout << conversionWeight << endl; test worked
     while(userContinue != "N") // beginning of while loop 
     {
-        conversionWeight = celestialConversion(celestialSelection(userResponse), userWeight);
-        cout << "The conversion for "<< userResponse << " is: " << conversionWeight << endl;
-        cout << "Continue?(Y/N)" << endl;
-        cin >> userContinue;
-        userContinue[0] = toupper(userContinue[0]);
-
         if(userContinue == "Y") // if the user wants to continue
         {
             cout << "Please provide a weight that you would like to test:" << endl;
@@ -178,12 +157,37 @@ int main()
             {
                 celestialMenu();
                 cin >> userResponse;
+                //cout << endl;
                 userResponse[0] = toupper(userResponse[0]); // captializes the user Response if they used all lower case
+                cout << endl;
             }
         }
-    } // end of while loop for continued execution
 
-    cout << "Thank you for using the Celestial Weight Converter, Have a great Day!" << endl;
+        conversionWeight = celestialConversion(celestialSelection(userResponse), userWeight); //call to functions to solve
+        cout << "The weight conversion for "<< userResponse << " is: " << conversionWeight << endl; // answer
+        cout << endl;
+        cout << "++++++++++++++++++" << endl;
+        cout << "+ Continue?(Y/N) +" << endl; // asking the user if they want to go again or not
+        cout << "++++++++++++++++++" << endl;
+        cout << endl;
+        cin >> userContinue;
+        userContinue[0] = toupper(userContinue[0]); // allows a lower case or upper case Y or N to continue
+
+    } // end of while loop for continued execution
+}
+
+int main()
+{
+    cout << "##################################################" << endl;
+    cout << "# \tThis is a Celestial Weight Converter:\t #" << endl;
+    cout << "##################################################" << endl;
+
+    doesWork();
+
+    cout << "=========================================================================" << endl; //put a box around the goodbye
+    cout << "= Thank you for using the Celestial Weight Converter, Have a great Day! =" << endl;
+    cout << "=========================================================================" << endl;
+    cout << endl;
 
     return 0;
     //system("pause");  //uncomment for windows machine

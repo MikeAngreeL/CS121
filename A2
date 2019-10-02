@@ -172,6 +172,16 @@ void doesWork()
         cout << endl;
         cin >> userContinue;
         userContinue[0] = toupper(userContinue[0]); // allows a lower case or upper case Y or N to continue
+        while(userContinue != "Y" && userContinue != "N")
+        {
+            cout << "INVAILD ENTRY: Please enter a Y or N" << endl;
+            cout << "++++++++++++++++++" << endl;
+            cout << "+ Continue?(Y/N) +" << endl; // asking the user if they want to go again or not
+            cout << "++++++++++++++++++" << endl;
+            cout << endl;
+            cin >> userContinue;
+            userContinue[0] = toupper(userContinue[0]); // allows a lower case or upper case Y or N to continue
+        }
 
     } // end of while loop for continued execution
 }

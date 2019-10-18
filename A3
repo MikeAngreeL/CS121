@@ -1,0 +1,155 @@
+/* Michael Long CS121
+    Programming Assignment #3
+    This program will pick a random # betweenn 1-100
+    The user then will guess the number up to 20 times
+    the program will determine how close or not close
+    the number is to the random number and then help 
+    the user as needed to get the answer. If the answer 
+    is not obtained then the player loses and can choose 
+    whether or not to play again.
+*/
+
+#include <iostream>
+#include <iomanip>
+#include <string>               //allows for string operations
+#include <cstdlib>              //allows the use of random
+#include <ctime>                //helps with seeding the random number
+
+void headerFunction();
+void endingFunction();
+int checkGuess(int randoNumber, int userGuess);
+void rangeCheck(int diff);
+void getInput(int& userGuess);
+int setRando();
+void doesWork();
+
+using namespace std;
+
+int main()          //beginning of MAIN()
+{
+    doesWork();
+    
+    return 0;
+}               //end of MAIN()
+
+
+void headerFunction()               //beginning of the header function
+{
+    cout <<"***This is a number guessing game! You have 20 attempts to guess the random number from 1-100" << endl;
+    cout << "***************************" << endl;
+    cout << "***Good luck, and enjoy!***" << endl;
+    cout << "***************************" << endl << endl;
+
+}               // end of header function
+
+void endingFunction()
+{
+    cout << "****************************" << endl;
+    cout << "** Thank you for playing! **" << endl;
+    cout << "****************************" << endl;
+}
+
+int setRando()                  //the beginning of setting a random number function
+{
+    srand(time(0));
+    return rand() % 100 + 1;
+}               // end of rando function
+
+int checkGuess(int randoNumber, int userGuess)                 //beginning of checkGuess
+{       
+    int diff = abs(randoNumber - userGuess);                //gets the positive difference in user guess and number
+
+    return diff;
+
+}//end of CheckGuess function
+
+void rangeCheck(int diff)
+{
+
+    if(diff == 0)                // if the user guesses right
+    {
+        cout << "Amazing, that is the correct number!!!" << endl << endl;
+        cout << "***********************" << endl;
+        cout << "*** Congratulations ***" << endl;
+        cout << "***********************" << endl << endl;
+    }                // end of == if
+
+    else if(diff == 1)
+    {
+        cout << "Within 1 of the actual number...super close!" << endl;
+    }           // end of 1 diff
+
+    else if(diff <= 5)
+    {
+        cout << "Within 5 of the actual number...close!" << endl;
+    }               //end of 5 diff
+
+    else if(diff <= 10)
+    {
+        cout << "Within 10 of the actual number...close-ish" << endl;
+    }               //end of 10 diff
+
+    else if(diff <= 20)
+    {
+        cout << "Within 20 of the actual number...not close at all!" << endl;
+    }               //end of 20 diff
+    
+    else
+    {
+        cout << "No where near the actual number..." << endl;
+    }
+}
+
+void getInput(int& userGuess)           // beginning of input function
+{
+    cout << "Input a number between 1-100: " << endl;
+    cin >> userGuess;        //gets user input
+}                              // end of the input function
+
+void doesWork()             // function to do a majority of the work of the program
+{
+    int randoNumber = setRando();           // sets a random number
+    int userGuess;                      // variable to store the user guess
+    int attemptCounter = 1;             //counts the amount of attempts
+    string userCont = "Y";           //initialized to Y so the outter while loop executes
+
+    headerFunction();           //prints an intro header to inform the user of the game
+    //cout << randoNumber << endl; tested to see what the number was
+    
+    while(userCont == "Y")
+    {
+        do
+        {
+            cout << "Attempt #" << attemptCounter << ": " << endl;              // tells the user the attempt #
+            cout << "*************" << endl;
+            
+            getInput(userGuess);                // gathers input from the user to change the value of userGuess
+
+            rangeCheck(checkGuess(randoNumber, userGuess));
+            
+            attemptCounter++;               //incriments counter up to 20
+
+            //cout << attemptCounter << endl;
+            if ((userGuess != randoNumber) && attemptCounter == 21)
+            {
+                cout << endl << "Nice try but you lost! The number was: " << randoNumber << "..." << endl;
+            }
+
+        } while ((userGuess != randoNumber) && (attemptCounter <= 20));
+        
+        cout << "Would you like to play again? (Y/N)" << endl;              // asks user if they wanna play again
+        cin >> userCont;
+        cout << endl;
+
+        userCont[0] = toupper(userCont[0]);              // capitalizes the user response for Y or N 
+
+        if(userCont == "Y")
+        {
+            attemptCounter = 1;              //resets counter to 1 if they wanna play again
+            randoNumber = setRando();               // gets a new random number
+        }
+    }
+    
+
+    endingFunction();               // closing header
+}               //end of doesWork function

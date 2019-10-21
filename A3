@@ -21,14 +21,56 @@ int checkGuess(int randoNumber, int userGuess);
 void rangeCheck(int diff);
 void getInput(int& userGuess);
 int setRando();
-void doesWork();
+
 
 using namespace std;
 
 int main()          //beginning of MAIN()
 {
-    doesWork();
+    int randoNumber = setRando();           // sets a random number
+    int userGuess;                      // variable to store the user guess
+    int attemptCounter = 1;             //counts the amount of attempts
+    string userCont = "Y";           //initialized to Y so the outter while loop executes
+
+    headerFunction();           //prints an intro header to inform the user of the game
+    //cout << randoNumber << endl; tested to see what the number was
     
+    while(userCont == "Y")
+    {
+        do
+        {
+            cout << "Attempt #" << attemptCounter << ": " << endl;              // tells the user the attempt #
+            cout << "*************" << endl;
+            
+            getInput(userGuess);                // gathers input from the user to change the value of userGuess
+
+            rangeCheck(checkGuess(randoNumber, userGuess));
+            
+            attemptCounter++;               //incriments counter up to 20
+
+            //cout << attemptCounter << endl;
+            if ((userGuess != randoNumber) && attemptCounter == 21)
+            {
+                cout << endl << "Nice try but you lost! The number was: " << randoNumber << "..." << endl;
+            }
+
+        } while ((userGuess != randoNumber) && (attemptCounter <= 20));
+        
+        cout << "Would you like to play again? (Y/N)" << endl;              // asks user if they wanna play again
+        cin >> userCont;
+        cout << endl;
+
+        userCont[0] = toupper(userCont[0]);              // capitalizes the user response for Y or N 
+
+        if(userCont == "Y")
+        {
+            attemptCounter = 1;              //resets counter to 1 if they wanna play again
+            randoNumber = setRando();               // gets a new random number
+        }
+    }
+    
+
+    endingFunction();               // closing header
     return 0;
 }               //end of MAIN()
 
@@ -76,27 +118,27 @@ void rangeCheck(int diff)
 
     else if(diff == 1)
     {
-        cout << "Within 1 of the actual number...super close!" << endl;
+        cout << "Within 1 of the actual number...super close!" << endl << endl;
     }           // end of 1 diff
 
     else if(diff <= 5)
     {
-        cout << "Within 5 of the actual number...close!" << endl;
+        cout << "Within 5 of the actual number...close!" << endl << endl;
     }               //end of 5 diff
 
     else if(diff <= 10)
     {
-        cout << "Within 10 of the actual number...close-ish" << endl;
+        cout << "Within 10 of the actual number...close-ish" << endl << endl;
     }               //end of 10 diff
 
     else if(diff <= 20)
     {
-        cout << "Within 20 of the actual number...not close at all!" << endl;
+        cout << "Within 20 of the actual number...not close at all!" << endl << endl;
     }               //end of 20 diff
     
     else
     {
-        cout << "No where near the actual number..." << endl;
+        cout << "No where near the actual number..." << endl << endl;
     }
 }
 
@@ -106,50 +148,3 @@ void getInput(int& userGuess)           // beginning of input function
     cin >> userGuess;        //gets user input
 }                              // end of the input function
 
-void doesWork()             // function to do a majority of the work of the program
-{
-    int randoNumber = setRando();           // sets a random number
-    int userGuess;                      // variable to store the user guess
-    int attemptCounter = 1;             //counts the amount of attempts
-    string userCont = "Y";           //initialized to Y so the outter while loop executes
-
-    headerFunction();           //prints an intro header to inform the user of the game
-    //cout << randoNumber << endl; tested to see what the number was
-    
-    while(userCont == "Y")
-    {
-        do
-        {
-            cout << "Attempt #" << attemptCounter << ": " << endl;              // tells the user the attempt #
-            cout << "*************" << endl;
-            
-            getInput(userGuess);                // gathers input from the user to change the value of userGuess
-
-            rangeCheck(checkGuess(randoNumber, userGuess));
-            
-            attemptCounter++;               //incriments counter up to 20
-
-            //cout << attemptCounter << endl;
-            if ((userGuess != randoNumber) && attemptCounter == 21)
-            {
-                cout << endl << "Nice try but you lost! The number was: " << randoNumber << "..." << endl;
-            }
-
-        } while ((userGuess != randoNumber) && (attemptCounter <= 20));
-        
-        cout << "Would you like to play again? (Y/N)" << endl;              // asks user if they wanna play again
-        cin >> userCont;
-        cout << endl;
-
-        userCont[0] = toupper(userCont[0]);              // capitalizes the user response for Y or N 
-
-        if(userCont == "Y")
-        {
-            attemptCounter = 1;              //resets counter to 1 if they wanna play again
-            randoNumber = setRando();               // gets a new random number
-        }
-    }
-    
-
-    endingFunction();               // closing header
-}               //end of doesWork function

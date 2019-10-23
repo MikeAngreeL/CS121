@@ -72,6 +72,7 @@ int main()          //beginning of MAIN()
     
 
     endingFunction();               // closing header
+    system("pause");
     return 0;
 }               //end of MAIN()
 

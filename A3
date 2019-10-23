@@ -17,10 +17,11 @@
 
 void headerFunction();
 void endingFunction();
+int setRando();
 int checkGuess(int randoNumber, int userGuess);
 void rangeCheck(int diff);
 void getInput(int& userGuess);
-int setRando();
+
 
 
 using namespace std;

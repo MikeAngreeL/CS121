@@ -96,7 +96,7 @@ void endingFunction()
 int setRando()                  //the beginning of setting a random number function
 {
     srand(time(0));
-    return rand() % 100 + 1;
+    return rand() % 100 + 1;        //sets range of random number from 1 - 100
 }               // end of rando function
 
 int checkGuess(int randoNumber, int userGuess)                 //beginning of checkGuess

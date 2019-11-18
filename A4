@@ -1,0 +1,137 @@
+/*Michael Long Assignment 4
+This is a word guessing game
+will read an a list of words into
+an array and then randomly pick
+one of the words to be guessed by the user.
+The user will have up to 6 misses in a game
+essentially like hangman.
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <cmath>
+#include <iomanip>
+
+using namespace std;
+
+int getRandomNum();
+string getRandomWord(string array[], int number);
+string hideWord(int wordsize, string hiddenWord);
+
+
+
+int main()
+{
+    ifstream myFile; //initializes a file
+    string wordArray[29];   //initializes an array of 29 elements
+    string randomWord;
+    int randomNumber;
+    char userGuess;
+    string hiddenWord;
+    int wordSize;
+    int guessCount = 0;
+    int totalCount = 0;
+    char guessedLetters[27] = { }; // creates an array to store guessed letters
+    
+
+    myFile.open("words.txt");   //opens the file words.txt
+    randomNumber = getRandomNum();
+
+    for(int x = 0; x < 29; x++)
+    {
+        getline(myFile, wordArray[x]);
+        // cout << wordArray[x] << endl;    to test that the array got loaded
+    }
+
+    randomWord = getRandomWord(wordArray, randomNumber);
+
+    hiddenWord = randomWord;
+
+    wordSize = hiddenWord.size() - 1;
+
+    hiddenWord = hideWord(wordSize, hiddenWord);
+
+    while(guessCount < 6 && hiddenWord != randomWord)   //Beginning of while
+    {
+        string tempWord = hiddenWord;
+        cout << "Please guess the random word, one letter at a time" << endl;
+        cin >> userGuess;
+        
+        guessedLetters[totalCount] = userGuess;
+
+        for(int x = 0; x < wordSize; x++)   //for loop that compares the letter guessed to the hidden word and reps if its in the actual word
+        {
+            if(randomWord[x] == userGuess)
+            {
+                hiddenWord[x] = userGuess;
+            }
+        }
+        cout << "Guessed letters: " << guessedLetters << endl; // prints out the already guessed letters
+
+        cout << hiddenWord << endl << endl; // shows the hidden word
+        //cout << randomWord << endl;   test print
+        if(hiddenWord != tempWord) // increase total count for guesses
+        {
+            guessCount = guessCount;
+            totalCount++;
+        }
+        else    //increases total count and wrong guess count
+        {
+            guessCount++;
+            totalCount++;
+        }
+        
+    }   //end of the while loop
+
+    if(hiddenWord == randomWord)    //prints out the correct if they got it correct
+    {
+        cout << "Congratulations!!! You guessed the word Right" << endl;
+        cout << "**Total guesses: " << totalCount << "." << endl;
+        cout << "**Wrong guess attempts: " << guessCount << "." << endl;
+        cout << "/**Random Word: " << randomWord << "." << endl;
+
+    }
+
+    else    //prints out a sorry statement for not getting the word right
+    {
+        cout << "Sorry!!! You did not guess the word" << endl;
+        cout << "**Total guesses: " << totalCount << "." << endl;
+        cout << "**Wrong guess attempts: " << guessCount << "." << endl;
+        cout << "**Random Word: " << randomWord << "." << endl;
+    }
+    
+
+
+    // cout << randomWord << endl; tested to see if the random word would print 
+    // cout << "Please guess the random word, one letter at a time" << endl;
+    // cin >> userGuess;
+    // cout << hiddenWord << endl;  tested to see if the hiddenword and real word printed correctly
+    // cout << randomWord << endl;
+    
+
+    myFile.close();
+    system("pause");
+    return 0;
+}
+
+int getRandomNum() // function to make a random number 
+{
+    srand(time(0));
+    return rand() % 29 + 1; // reutrns the number to main after the function is called.
+}   //end of the getRandomNum function
+
+string getRandomWord(string array[], int number)  //beginning of getting a word from the array
+{
+    return array[number];
+}   //end of getting the word function
+
+string hideWord(int wordSize, string hiddenWord)    //beginning of hideWord function
+{
+    for(int x = 0; x < wordSize; x++)
+    {
+        hiddenWord[x] = '*';
+    }
+    return hiddenWord;
+}   //end of hideWord

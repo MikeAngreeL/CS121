@@ -16,9 +16,11 @@ essentially like hangman.
 
 using namespace std;
 
+void intro();
 int getRandomNum();
 string getRandomWord(string array[], int number);
 string hideWord(int wordsize, string hiddenWord);
+
 
 
 
@@ -35,6 +37,7 @@ int main()
     int totalCount = 0;
     char guessedLetters[27] = { }; // creates an array to store guessed letters
     
+    intro();
 
     myFile.open("words.txt");   //opens the file words.txt
     randomNumber = getRandomNum();
@@ -99,7 +102,7 @@ int main()
         cout << "Sorry!!! You did not guess the word" << endl;
         cout << "**Total guesses: " << totalCount << "." << endl;
         cout << "**Wrong guess attempts: " << guessCount << "." << endl;
-        cout << "**Random Word: " << randomWord << "." << endl;
+        cout << "/**Random Word: " << randomWord << "." << endl;
     }
     
 
@@ -114,6 +117,13 @@ int main()
     myFile.close();
     system("pause");
     return 0;
+}
+
+void intro()
+{
+    cout << "Hello this is a word guessing game." << endl << 
+    "You can guess the word one letter at a time up to 6 wrong guesses"
+    << endl << "Good Luck and guess right!" << endl << endl;
 }
 
 int getRandomNum() // function to make a random number 
